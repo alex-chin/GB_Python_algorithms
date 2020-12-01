@@ -8,3 +8,23 @@
 Поэтому использование встроенных функций для перевода из одной системы счисления в другую в данной задаче под запретом.
 Вспомните начальную школу и попробуйте написать сложение и умножение в столбик.
 """
+from collections import deque
+
+rang = tuple('0123456789ABCDEF')  # словарь преобразования разрядов
+# a = deque('1F1')
+a = deque(input("Введите а:").upper())
+# b = deque('23BC6')
+b = deque(input("Введите b:").upper())
+summa = deque()  # сумма
+a.extendleft('0' * (max(len(a), len(b)) - len(a)))  # выравнивание нулями
+print(' ', ''.join(a))
+b.extendleft('0' * (max(len(a), len(b)) - len(b)))  # выравнивание нулями
+print('+', ''.join(b))
+print('-' * 5)
+shift = 0
+for i in range(len(a)):  # контроль по 1 слагаемому, так как выровнены
+    s = rang.index(a.pop()) + rang.index(b.pop()) + shift  # сумматор + перенос
+    summa.extendleft([rang[s % 16]])  # запись в разрад со сдвигом
+    shift = s // 16  # вычисление переноса
+print(' ', ''.join(summa))
+
