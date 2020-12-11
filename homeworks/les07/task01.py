@@ -7,3 +7,22 @@ b. постарайтесь сделать алгоритм умнее, но п�
 лучшенные версии сортировки, например, расчёской, шейкерная и другие в зачёт не идут.
 
 """
+
+import random
+
+array = [i for i in range(-100, 100 + 1)]
+random.shuffle(array)
+print(array)
+
+
+def sort_rev(array):
+    n = len(array)
+    while n > 1:
+        for i in range(len(array) - 1, 0, -1):
+            if array[i] < array[i - 1]:
+                array[i], array[i - 1] = array[i - 1], array[i]
+        n -= 1
+
+
+sort_rev(array)
+print(array)
