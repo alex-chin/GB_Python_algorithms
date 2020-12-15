@@ -9,16 +9,25 @@ def dijkstra(graph, start):
     is_visited = [False] * length
     cost = [float('inf')] * length
     parent = [-1] * length
-    road = {key: [] for key in range(length)}
+    # road = {key: [] for key in range(length)}
 
     cost[start] = 0
     min_cost = 0
-    for start in range(length):
+    while min_cost < float('inf'):
         is_visited[start] = True
         for i, vertex in enumerate(graph[start]):
             if vertex != 0 and not is_visited[i]:
-                road[i].append(start)
-    return road
+                # road[i].append(start)
+                if cost[i] > vertex + cost[start]:
+                    cost[i] = vertex + cost[start]
+                    parent[i] = start
+        min_cost = float('inf')
+        for i in range(length):
+            if min_cost > cost[i] and not is_visited[i]:
+                min_cost = cost[i]
+                start = i
+    # print(road)
+    return cost
 
 
 graph = [
