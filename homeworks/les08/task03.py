@@ -6,47 +6,47 @@ a. граф должен храниться в виде списка смежн�
 b. генерация графа выполняется в отдельной функции, которая принимает на вход число вершин.
 """
 import random
-import vis_graph
 
 
-def gen_graph(num):
+def gen_graph(num, cohesion):
+    """ Генерация связанного графа
+    :param num: Количество вершин
+    :param cohesion: Связоность в вершине, выбирается случайно от 2 до cohesion [2,4]
+    :return:
+    """
     graph = {}
     for n in range(num):
+        # кандидаты переходой
         roots = list(range(num))
+        # исключить текущую
         del roots[n]
-        graph[n] = set(random.sample(roots, random.choice([2, 2])))
+        graph[n] = set(random.sample(roots, random.choice([2, cohesion])))
     return graph
 
 
-def recursive_dfs(graph, source, path=[]):
-    if source not in path:
-
-        path.append(source)
-
-        if source not in graph:
-            # leaf node, backtrack
-            return path
-
-        for neighbour in graph[source]:
-            path = recursive_dfs(graph, neighbour, path)
-
-    return path
-
-
 def dfs(graph, start, visited=None):
+    """ обход графа поиском вглубину
+    :param graph: граф
+    :param start: стартовая вершина
+    :param visited: фиксация посещений
+    :return:
+    """
     if visited is None:
         visited = set()
     visited.add(start)
-    # print(start)
-    for next in graph[start] - visited:
+    for next in graph[start] - visited:  # исключить уже посещенные
+        # вглубь по очередной вершине
         dfs(graph, next, visited)
     return visited
 
 
-g = gen_graph(10)
+g = gen_graph(10, 2)
+# сильно связанный граф
+# g = gen_graph(10,4)
 
 print(g)
-print(recursive_dfs(g, 0))
 print(dfs(g, 0))
 
-vis_graph.GraphVisualization().render(g)
+# визуализация графа, требует networkx, matplotlib
+# import vis_graph
+# vis_graph.GraphVisualization().render(g)
