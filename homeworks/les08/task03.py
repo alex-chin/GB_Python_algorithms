@@ -16,7 +16,7 @@ def gen_graph(num, cohesion):
     """
     graph = {}
     for n in range(num):
-        # кандидаты переходой
+        # кандидаты переходов
         roots = list(range(num))
         # исключить текущую
         del roots[n]
