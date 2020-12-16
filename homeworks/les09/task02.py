@@ -5,15 +5,15 @@ from collections import Counter
 
 
 class Node:
-    def __init__(self, value, freq, left, right):
-        self.value = value
+    def __init__(self, freq, left=None, right=None):
         self.freq = freq
         self.left = left
         self.right = right
 
 
 def build_tree(buf):
-    freq = dict(sorted(Counter(buf).items(), key=lambda item: item[1], reverse=True))
+    freq = {key: Node(value) for key, value in dict(Counter(buf).items()).items()}
+    freq = dict(sorted(freq.items(), key=lambda item: item[1].freq, reverse=True))
     return freq
 
 
