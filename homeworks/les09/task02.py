@@ -68,4 +68,4 @@ if __name__ == '__main__':
     print("Алфавит: ", codec)
     sec = [codec[sym] for sym in phrase]
     print("Фраза по символам: ", sec)
-    print("Фраза закодированная в 16-форме: ", hex(int(''.join(sec), base=2)))
+    print("Фраза закодированная в HEX форме: ", hex(int(''.join(sec), base=2)))
