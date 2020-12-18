@@ -13,6 +13,9 @@ class Node:
         self.value = value
 
     def __str__(self):
+        """ форма при печати
+        :return:
+        """
         return f'\n({self.value}:{self.freq}, left={self.left}, right={self.right})'
         # return f'Node(freg={self.freq}, value={self.value}, left={self.left}, right={self.right})'
 
@@ -20,10 +23,21 @@ class Node:
         return self.__str__()
 
     def __add__(self, other):
+        """ перегрузка оператора сложения для вершин
+        :param other:
+        :return:
+        """
+        # в результируещей вершине складывается тольоко частоты
         return Node(self.freq + other.freq, None, left=self, right=other)
 
     @staticmethod
     def has_path(root, value, path):
+        """ воспроизводит путо до листа с символом
+        :param root:
+        :param value:
+        :param path: возвращает путь
+        :return:
+        """
         if not root:
             return False
         if root.value == value:
@@ -38,20 +52,37 @@ class Node:
 
 
 def build_tree(alphabet):
+    """ по частотному словарю строит дерево
+    :param alphabet:
+    :return:
+    """
+    # преобразование словаря в узлы
     tree = [Node(value, key) for key, value in alphabet.items()]
 
     while 1:
+        # сортировка на каждом шаге
         tree.sort(key=lambda item: item.freq)
+        # остался один узел
         if len(tree) < 2:
             break
+        #  сложение двух узлов
         node = tree[0] + tree[1]
+        # по старые удаляем
         del tree[0]
         del tree[0]
+        # добавление в начало
         tree = [node] + tree
     return tree
 
 
 def codec_houf(buf):
+    """ главная функция
+    1. построение частотного словаря
+    2. создание деревва
+    3. построение словаря для кодирования
+    :param buf:
+    :return:
+    """
     alphabet = Counter(buf)
     tree = build_tree(alphabet)[0]
     for key in alphabet.keys():
@@ -63,6 +94,7 @@ def codec_houf(buf):
 
 if __name__ == '__main__':
     phrase = 'beep boop beer!'
+    # phrase = input("Введите фразу :")
     print('Фраза : ', phrase)
     codec = codec_houf(phrase)
     print("Алфавит: ", codec)

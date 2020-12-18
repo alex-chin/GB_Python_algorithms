@@ -13,7 +13,7 @@ def permutation(buf):
     :param buf:
     """
     length = len(buf)
-    for l_len in range(1, length - 1):
+    for l_len in range(1, length):
         for idx in range(length):
             if l_len + idx > length:
                 break
